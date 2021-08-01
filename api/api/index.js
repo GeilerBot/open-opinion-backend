@@ -1,9 +1,11 @@
 import { Router } from 'express'
 import post from './post'
+import moderators from './moderators'
 
 const router = new Router()
 
 router.use('/post', post)
+router.use('/moderators', moderators)
 
 /**
  * @apiDefine master Master access only

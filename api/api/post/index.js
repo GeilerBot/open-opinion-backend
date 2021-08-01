@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { middleware as query } from 'querymen'
 import { middleware as body } from 'bodymen'
-import { create, index, show, update, destroy, likeAPost } from './controller'
-import { schema } from './model'
-export Post, { schema } from './model'
+import { create, index, show, update, destroy, addViews } from "./controller";
+import { schema } from "./model";
+export Post, { schema } from "./model";
 
-const router = new Router()
-const { postID, time, views, verified, author, message, title, imgSrc } = schema.tree
+const router = new Router();
+const { postID, time, views, verified, author, message, title, imgSrc } =
+  schema.tree;
 
 /**
  * @api {post} /post Create post
@@ -23,10 +24,20 @@ const { postID, time, views, verified, author, message, title, imgSrc } = schema
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Post not found.
  */
-router.post('/',
+router.post(
+  "/",
   body({
-    postID, time, views, verified, author, message, title, imgSrc}),
-  create)
+    postID,
+    time,
+    views,
+    verified,
+    author,
+    message,
+    title,
+    imgSrc,
+  }),
+  create
+);
 
 /**
  * @api {get} /post Retrieve posts
@@ -36,9 +47,7 @@ router.post('/',
  * @apiSuccess {Object[]} posts List of posts.
  * @apiError {Object} 400 Some parameters may contain invalid values.
  */
-router.get('/',
-  query(),
-  index)
+router.get("/", query(), index);
 
 /**
  * @api {get} /post/:id Retrieve post
@@ -48,8 +57,7 @@ router.get('/',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Post not found.
  */
-router.get('/:id',
-  show)
+router.get("/:id", show);
 
 /**
  * @api {put} /post/:id Update post
@@ -66,9 +74,7 @@ router.get('/:id',
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 404 Post not found.
  */
-router.patch('/:id',
-  body({ verified }),
-  update)
+router.patch("/:id", body({ verified }), update);
 
 /**
  * @api {delete} /post/:id Delete post
@@ -77,11 +83,8 @@ router.patch('/:id',
  * @apiSuccess (Success 204) 204 No Content.
  * @apiError 404 Post not found.
  */
-router.delete('/:id',
-  destroy)
+router.delete("/:id", destroy);
 
-router.patch('/:id',
-body({ views }),
-  likeAPost)
+router.patch("/addView/:postID", addViews);
 
 export default router

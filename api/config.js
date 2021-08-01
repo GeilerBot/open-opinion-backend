@@ -21,37 +21,38 @@ if (process.env.NODE_ENV !== 'production') {
 
 const config = {
   all: {
-    env: process.env.NODE_ENV || 'development',
-    root: path.join(__dirname, '..'),
+    env: process.env.NODE_ENV || "development",
+    root: path.join(__dirname, ".."),
     port: process.env.PORT || 9000,
-    ip: process.env.IP || '0.0.0.0',
-    apiRoot: process.env.API_ROOT || '',
-    masterKey: requireProcessEnv('MASTER_KEY'),
+    ip: process.env.IP || "0.0.0.0",
+    apiRoot: process.env.API_ROOT || "",
+    masterKey: requireProcessEnv("MASTER_KEY"),
     mongo: {
       options: {
         useUnifiedTopology: true,
         useNewUrlParser: true,
-        useCreateIndex: true
-      }
-    }
+        useCreateIndex: true,
+        useFindAndModify: false,
+      },
+    },
   },
-  test: { },
+  test: {},
   development: {
     mongo: {
-      uri: 'mongodb://localhost/open-opinion-api-dev',
+      uri: "mongodb://localhost/open-opinion-api-dev",
       options: {
-        debug: true
-      }
-    }
+        debug: true,
+      },
+    },
   },
   production: {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb://localhost/open-opinion-api'
-    }
-  }
-}
+      uri: process.env.MONGODB_URI || "mongodb://localhost/open-opinion-api",
+    },
+  },
+};
 
 module.exports = merge(config.all, config[config.all.env])
 export default module.exports
